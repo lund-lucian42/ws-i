@@ -14,14 +14,14 @@ jobs:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
       - name: Run the Server build process
+        uses: addnab/docker-run-action@v3
         env:
           PORT: ${{matrix.Port}}
-        uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                echo run on $PORT 
-                sleep 1m
+                echo port is $PORT
+                sleep 30
 
  server-control:
     runs-on: ubuntu-latest
@@ -35,14 +35,14 @@ jobs:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
       - name: Run the Server build process
+        uses: addnab/docker-run-action@v3
         env:
           PORT: ${{matrix.Port}}
-        uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                echo run on $PORT 
-                sleep 1m
+                echo port is $PORT
+                sleep 30
 
  clean-server:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
         with:
             image: ${{ secrets.CRIMAGE }}
             run: |
-                sleep 20
+                sleep 30
