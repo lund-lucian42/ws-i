@@ -14,15 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
+      - name: Run the Server build process
         env:
           PORT: ${{matrix.Port}}
-      - name: Run the Server build process
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                PORT=$PORT timeout 180m node server.js
-                echo $?
+                sleep 30
 
  server-control:
     runs-on: ubuntu-latest
@@ -36,20 +35,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
+      - name: Run the Server build process
         env:
           PORT: ${{matrix.Port}}
-      - name: Run the Server build process
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                PORT=$PORT timeout 180m node server.js
-                echo $?
+                sleep 30
 
  clean-server:
     runs-on: ubuntu-latest
     if: always()
-    needs: server-control
+    needs: [server-control, node-server-build]
     timeout-minutes: 360
     steps:
       - name: Server Clean
@@ -57,4 +55,4 @@ jobs:
         with:
             image: ${{ secrets.CRIMAGE }}
             run: |
-                KEY="${{ secrets.CRKEY}}" ./start.sh
+                sleep 30
