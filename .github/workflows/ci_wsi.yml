@@ -10,18 +10,18 @@ jobs:
       matrix:
          Port: [10011, 10012, 10013, 10014, 10015]
     timeout-minutes: 360
+    env:
+      PORT: ${{matrix.Port}}
     steps:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
-        env:
-          PORT: ${{matrix.Port}}
       - name: Run the Server build process
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                echo run on port $PORT
-                sleep 30
+                echo "run on port $PORT"
+                sleep 20
 
  server-control:
     runs-on: ubuntu-latest
@@ -31,18 +31,18 @@ jobs:
       matrix:
          Port: [10011, 10012, 10013, 10014, 10015]
     timeout-minutes: 360
+    env:
+      PORT: ${{matrix.Port}}
     steps:
       - uses: actions/checkout@v2
         name: Server build start on Port ${{matrix.Port}}
-        env:
-          PORT: ${{matrix.Port}}
       - name: Run the Server build process
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ secrets.IMAGE }}
             run: |
-                echo run on port $PORT
-                sleep 30
+                echo "run on port $PORT"
+                sleep 20
 
  clean-server:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
         with:
             image: ${{ secrets.CRIMAGE }}
             run: |
-                sleep 30
+                KEY="${{ secrets.CRKEY}}" ./start.sh
