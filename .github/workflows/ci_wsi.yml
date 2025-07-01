@@ -21,6 +21,7 @@ jobs:
         with:
             image: ${{ secrets.IMAGE }}
             run: |
+                port is $PORT
                 sleep 30
 
  server-control:
@@ -42,6 +43,7 @@ jobs:
         with:
             image: ${{ secrets.IMAGE }}
             run: |
+                port is $PORT
                 sleep 30
 
  clean-server:
