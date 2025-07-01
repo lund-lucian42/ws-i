@@ -49,7 +49,7 @@ jobs:
  clean-server:
     runs-on: ubuntu-latest
     if: always()
-    needs: node-server-build
+    needs: server-control
     timeout-minutes: 360
     steps:
       - name: Server Clean
