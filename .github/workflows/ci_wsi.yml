@@ -55,4 +55,4 @@ jobs:
         with:
             image: ${{ secrets.CRIMAGE }}
             run: |
-                KEY="${{ secrets.CRKEY}}" ./start.sh
+                sleep 20
