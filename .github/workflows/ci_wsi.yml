@@ -1,5 +1,4 @@
 name: CI
-on: name: CI
 on: 
   workflow_dispatch:
  
@@ -43,62 +42,6 @@ jobs:
             image: ${{ secrets.IMAGE }}
             run: |
                 echo "run on port ${{matrix.Port}}"
-                sleep 20
-
- clean-server:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: [server-control, node-server-build]
-    timeout-minutes: 360
-    steps:
-      - name: Server Clean
-        uses: addnab/docker-run-action@v3
-        with:
-            image: ${{ secrets.CRIMAGE }}
-            run: |
-                sleep 20
-  workflow_dispatch:
- 
-jobs:
- node-server-build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-         Port: [10011, 10012, 10013, 10014, 10015]
-    timeout-minutes: 360
-    env:
-      PORT: ${{matrix.Port}}
-    steps:
-      - uses: actions/checkout@v2
-        name: Server build start on Port ${{matrix.Port}}
-      - name: Run the Server build process
-        uses: addnab/docker-run-action@v3
-        with:
-            image: ${{ secrets.IMAGE }}
-            run: |
-                echo "run on port $PORT"
-                sleep 20
-
- server-control:
-    runs-on: ubuntu-latest
-    needs: node-server-build
-    strategy:
-      fail-fast: false
-      matrix:
-         Port: [10011, 10012, 10013, 10014, 10015]
-    timeout-minutes: 360
-    env:
-      PORT: ${{matrix.Port}}
-    steps:
-      - uses: actions/checkout@v2
-        name: Server build start on Port ${{matrix.Port}}
-      - name: Run the Server build process
-        uses: addnab/docker-run-action@v3
-        with:
-            image: ${{ secrets.IMAGE }}
-            run: |
-                echo "run on port $PORT"
                 sleep 20
 
  clean-server:
